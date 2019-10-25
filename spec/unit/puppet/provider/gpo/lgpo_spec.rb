@@ -36,12 +36,12 @@ describe Puppet::Type.type(:gpo).provider(:lgpo) do
         expect(File).to receive(:file?).once.with(file).and_return(present)
 
         if present
-            provider.class.expects(:lgpo).once.with('/parse', '/q', "/#{scope[0]}", file)
-                .returns(File.read(File.join(
+            expect(provider.class).to receive(:lgpo).once.with('/parse', '/q', "/#{scope[0]}", file)
+                .and_return(File.read(File.join(
             File.dirname(__FILE__),
             "../../../../fixtures/unit/puppet/provider/gpo/lgpo/#{scope}/full.out")))
         else
-            provider.class.expects(:lgpo).never
+            expect(provider.class).to receive(:lgpo).never
         end
     end
 
@@ -52,12 +52,13 @@ describe Puppet::Type.type(:gpo).provider(:lgpo) do
 
         args = ["/r", out_file]
         args << '/w' << out_polfile
-        provider.class.expects(:lgpo).once.with(*args).returns(nil)
+        expect(provider.class).to receive(:lgpo).once.with(*args).and_return(nil)
         expect(File).to receive(:delete).once.with(out_file).and_return(nil)
 
         args = ["/#{scope[0]}", out_polfile]
         args << '/e' << cse unless cse.nil?
-        provider.class.expects(:lgpo).once.with(*args).returns(nil)
+        #provider.class.expects(:lgpo).once.with(*args).returns(nil)
+        expect(provider.class).to receive(:lgpo).once.with(*args).and_return(nil)
         expect(File).to receive(:delete).once.with(out_polfile).and_return(nil)
     end
 
