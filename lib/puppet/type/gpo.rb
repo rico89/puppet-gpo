@@ -7,9 +7,17 @@ Puppet::Type.newtype(:gpo) do
 
     ensurable do
         defaultvalues
-        defaultto(:present)
+        defaultto(:enabled)
 
-        newvalue(:deleted) do
+        newvalue(:enabled) do
+            provider.delete
+        end
+
+        newvalue(:disabled) do
+            provider.delete
+        end
+
+        newvalue(:notconfigured) do
             provider.delete
         end
     end

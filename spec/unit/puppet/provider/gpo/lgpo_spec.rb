@@ -216,7 +216,7 @@ describe Puppet::Type.type(:gpo).provider(:lgpo) do
             let(:params) do
                 {
                     :title    => 'machine::windowsdefender::exclusions_processes::exclusions_processeslist',
-                    :ensure   => :deleted,
+                    :ensure   => :absent,
                     :provider => 'lgpo',
                 }
             end

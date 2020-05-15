@@ -97,9 +97,9 @@ describe Puppet::Type.type(:gpo) do
             expect(described_class.attrtype(:ensure)).to eq(:property)
         end
 
-        it 'should be ensured to present by default' do
+        it 'should be ensured to enabled by default' do
             res = described_class.new(:title => valid_string_path)
-            expect(res[:ensure]).to eq(:present)
+            expect(res[:ensure]).to eq(:enabled)
         end
 
         it 'should be ensurable to absent' do
@@ -110,12 +110,20 @@ describe Puppet::Type.type(:gpo) do
             expect(res[:ensure]).to eq(:absent)
         end
 
-        it 'should be ensurable to deleted' do
+        it 'should be ensurable to enabled' do
             res = described_class.new(
                 :title  => valid_string_path,
-                :ensure => :deleted
+                :ensure => :enabled
             )
-            expect(res[:ensure]).to eq(:deleted)
+            expect(res[:ensure]).to eq(:enabled)
+        end
+
+        it 'should be ensurable to disabled' do
+            res = described_class.new(
+                :title  => valid_string_path,
+                :ensure => :disabled
+            )
+            expect(res[:ensure]).to eq(:disabled)
         end
     end
 
